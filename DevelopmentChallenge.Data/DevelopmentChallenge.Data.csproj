@@ -44,11 +44,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="enums\Idioma.cs" />
+    <Compile Include="Formas\Circulo.cs" />
+    <Compile Include="Formas\Cuadrado.cs" />
     <Compile Include="Classes\FormaGeometrica.cs" />
+    <Compile Include="Formas\Rectangulo.cs" />
+    <Compile Include="Formas\Trapecio.cs" />
+    <Compile Include="Formas\TrianguloEquilatero.cs" />
+    <Compile Include="Implementaciones\IFormaGeometrica.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource\FormasGeometricas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormasGeometricas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\FormasGeometricas.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormasGeometricas.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\FormasGeometricas.it.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormasGeometricas.it.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\FormasGeometricas.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FormasGeometricas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\FormasGeometricas.it.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FormasGeometricas.it.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\FormasGeometricas.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FormasGeometricas.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Reportes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

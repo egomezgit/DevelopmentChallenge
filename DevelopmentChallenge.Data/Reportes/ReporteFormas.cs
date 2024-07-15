@@ -1,40 +1,28 @@
-﻿/******************************************************************************************************************/
-/******* ¿Qué pasa si debemos soportar un nuevo idioma para los reportes, o agregar más formas geométricas? *******/
-/******************************************************************************************************************/
-
-/*
- * TODO: 
- * Refactorizar la clase para respetar principios de la programación orientada a objetos.
- * Implementar la forma Trapecio/Rectangulo. 
- * Agregar el idioma Italiano (o el deseado) al reporte.
- * Se agradece la inclusión de nuevos tests unitarios para validar el comportamiento de la nueva funcionalidad agregada (los tests deben pasar correctamente al entregar la solución, incluso los actuales.)
- * Una vez finalizado, hay que subir el código a un repo GIT y ofrecernos la URL para que podamos utilizar la nueva versión :).
- */
-
-using DevelopmentChallenge.Data.enums;
+﻿using DevelopmentChallenge.Data.Classes;
 using DevelopmentChallenge.Data.Formas;
 using DevelopmentChallenge.Data.Implementaciones;
 using DevelopmentChallenge.Data.Resource;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading;
 
-namespace DevelopmentChallenge.Data.Classes
+
+namespace DevelopmentChallenge.Data.Reporte
 {
-    public class FormaGeometrica
+    public class ReporteFormas
     {
         private readonly IEnumerable<IFormaGeometrica> formas;
-        private readonly Idioma idioma;
-        public FormaGeometrica(IEnumerable<IFormaGeometrica> formas, Idioma idioma)
+        private readonly IdiomaReporte idioma;
+        public ReporteFormas(IEnumerable<IFormaGeometrica> formas, IdiomaReporte idioma)
         {
             this.formas = formas;
             this.idioma = idioma;
         }
 
-        public static string Imprimir(IEnumerable<IFormaGeometrica> formas, Idioma idioma)
+        public static string GenerarReporte(IEnumerable<IFormaGeometrica> formas, IdiomaReporte idioma)
         {
             // Implementación del reporte utilizando StringBuilder y el idioma seleccionado
 
@@ -60,20 +48,15 @@ namespace DevelopmentChallenge.Data.Classes
                 var numeroCuadrados = 0;
                 var numeroCirculos = 0;
                 var numeroTriangulos = 0;
-                var numeroTrapecios = 0;
-                var numeroRectangulos = 0;
 
                 var areaCuadrados = 0m;
                 var areaCirculos = 0m;
                 var areaTriangulos = 0m;
-                var areaTrapecios = 0m;
-                var areaRectangulos = 0m;
 
                 var perimetroCuadrados = 0m;
                 var perimetroCirculos = 0m;
                 var perimetroTriangulos = 0m;
-                var perimetroTrapecios = 0m;
-                var perimetroRectangulos = 0m;
+
 
                 foreach (var forma in formas)
                 {
@@ -97,33 +80,17 @@ namespace DevelopmentChallenge.Data.Classes
                         perimetroTriangulos += forma.CalcularPerimetro();
                     }
 
-                    if (forma.Nombre == "Trapecio")
-                    {
-                        numeroTrapecios++;
-                        areaTrapecios += forma.CalcularArea();
-                        perimetroTrapecios += forma.CalcularPerimetro();
-                    }
-
-                    if (forma.Nombre == "Rectángulo")
-                    {
-                        numeroRectangulos++;
-                        areaRectangulos += forma.CalcularArea();
-                        perimetroRectangulos += forma.CalcularPerimetro();
-                    }
-
                 }
 
                 sb.Append(ObtenerLinea(numeroCuadrados, areaCuadrados, perimetroCuadrados, typeof(Cuadrado).Name));
                 sb.Append(ObtenerLinea(numeroCirculos, areaCirculos, perimetroCirculos, typeof(Circulo).Name));
                 sb.Append(ObtenerLinea(numeroTriangulos, areaTriangulos, perimetroTriangulos, typeof(TrianguloEquilatero).Name));
-                sb.Append(ObtenerLinea(numeroTrapecios, areaTrapecios, perimetroTrapecios, typeof(Trapecio).Name));
-                sb.Append(ObtenerLinea(numeroRectangulos, areaRectangulos, perimetroRectangulos, typeof(Rectangulo).Name));
 
                 // FOOTER
                 sb.Append("TOTAL:<br/>");
-                sb.Append(numeroCuadrados + numeroCirculos + numeroTriangulos + numeroTrapecios + numeroRectangulos + " " + $"{FormasGeometricas.Formas}" + " ");
-                sb.Append($"{FormasGeometricas.Perimetro} " + (perimetroCuadrados + perimetroTriangulos + perimetroCirculos + perimetroTrapecios + perimetroRectangulos).ToString("#.##") + " ");
-                sb.Append("Area " + (areaCuadrados + areaCirculos + areaTriangulos + areaTrapecios + areaRectangulos).ToString("#.##"));
+                sb.Append(numeroCuadrados + numeroCirculos + numeroTriangulos + " " + $"{FormasGeometricas.Formas}" + " ");
+                sb.Append($"{FormasGeometricas.Perimetro} " + (perimetroCuadrados + perimetroTriangulos + perimetroCirculos).ToString("#.##") + " ");
+                sb.Append("Area " + (areaCuadrados + areaCirculos + areaTriangulos).ToString("#.##"));
             }
 
             return sb.ToString();
@@ -150,10 +117,6 @@ namespace DevelopmentChallenge.Data.Classes
                     return cantidad == 1 ? FormasGeometricas.Circulo : FormasGeometricas.Circulos;
                 case "TrianguloEquilatero":
                     return cantidad == 1 ? FormasGeometricas.Triangulo : FormasGeometricas.Triangulos;
-                case "Trapecio":
-                    return cantidad == 1 ? FormasGeometricas.Trapecio : FormasGeometricas.Trapecios;
-                case "Rectangulo":
-                    return cantidad == 1 ? FormasGeometricas.Rectangulo : FormasGeometricas.Rectangulos;
             }
 
             return string.Empty;
